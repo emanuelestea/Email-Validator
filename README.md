@@ -69,6 +69,14 @@ Some mail servers intentionally prevent external verification, while others acce
 
 For this reason, the validator reports whether an address is likely valid rather than guaranteeing that the mailbox exists.
 
+## AI-Assisted Development
+This project is also being developed with the support of AI tools, primarily ChatGPT, as a learning and experimentation aid.
+
+AI is currently used for:
+ - Brainstorming — exploring ideas, possible features, architecture choices and implementation approaches.
+ - Planning — breaking the project into smaller tasks and defining development milestones.
+ - Progress tracking — maintaining a development log to monitor the current state of the project, completed tasks and next steps.
+
 ## 🤝 Contributing
 
 Contributions, suggestions and bug reports are welcome.
