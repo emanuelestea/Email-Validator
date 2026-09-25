@@ -20,7 +20,7 @@ The project checks an email address through multiple validation steps, providing
 ## Installation
 
 Clone the repository:
- - git clone https://github.com/YOUR_USERNAME/email-validator.git
+ - git clone https://github.com/emanuelestea/email-validator.git
 
 ## Usage
 
