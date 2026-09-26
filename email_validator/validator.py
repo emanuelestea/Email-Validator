@@ -6,48 +6,7 @@ EMAIL_MAX_LENGTH = 254
 LOCAL_PART_MAX_LENGTH = 64
 DOMAIN_MAX_LENGTH = 253
 
-
-def validate_email(email: str) -> tuple[bool, str]:
-    """
-    Valida sintatticamente un indirizzo email.
-
-    Returns:
-        (True, "OK") se valido
-        (False, "motivo") se non valido
-
-    Nota:
-        Questa funzione NON verifica che il dominio esista,
-        che abbia record MX o che la casella email esista realmente.
-    """
-
-    # ---------------------------------------------------------
-    # 1. Tipo e valore
-    # ---------------------------------------------------------
-    if not isinstance(email, str):
-        return False, "L'indirizzo deve essere una stringa"
-
-    if not email:
-        return False, "Indirizzo vuoto"
-
-    # Non consideriamo spazi esterni come parte dell'email.
-    # Meglio rifiutarli anziché correggere silenziosamente l'input.
-    if email != email.strip():
-        return False, "L'indirizzo contiene spazi iniziali o finali"
-
-    # ---------------------------------------------------------
-    # 2. Lunghezza complessiva
-    # ---------------------------------------------------------
-    if len(email.encode("utf-8")) > EMAIL_MAX_LENGTH:
-        return False, "Indirizzo troppo lungo"
-
-    # ---------------------------------------------------------
-    # 3. Esattamente una @
-    # ---------------------------------------------------------
-    if email.count("@") != 1:
-        return False, "L'indirizzo deve contenere una sola @"
-
-    local, domain = email.rsplit("@", 1)
-
+def validate_local(local: str) -> tuple[bool, str]:
     # ---------------------------------------------------------
     # 4. Local part
     # ---------------------------------------------------------
@@ -89,6 +48,7 @@ def validate_email(email: str) -> tuple[bool, str]:
     if not allowed_local.fullmatch(local):
         return False, "La parte locale contiene caratteri non validi"
 
+def validate_domain(domain: str) -> tuple[bool, str]:
     # ---------------------------------------------------------
     # 6. Dominio
     # ---------------------------------------------------------
@@ -172,5 +132,50 @@ def validate_email(email: str) -> tuple[bool, str]:
 
     if not re.fullmatch(r"[A-Za-z0-9]+", tld):
         return False, "Il TLD contiene caratteri non validi"
+
+def validate_email(email: str) -> tuple[bool, str]:
+    """
+    Valida sintatticamente un indirizzo email.
+
+    Returns:
+        (True, "OK") se valido
+        (False, "motivo") se non valido
+
+    Nota:
+        Questa funzione NON verifica che il dominio esista,
+        che abbia record MX o che la casella email esista realmente.
+    """
+
+    # ---------------------------------------------------------
+    # 1. Tipo e valore
+    # ---------------------------------------------------------
+    if not isinstance(email, str):
+        return False, "L'indirizzo deve essere una stringa"
+
+    if not email:
+        return False, "Indirizzo vuoto"
+
+    # Non consideriamo spazi esterni come parte dell'email.
+    # Meglio rifiutarli anziché correggere silenziosamente l'input.
+    if email != email.strip():
+        return False, "L'indirizzo contiene spazi iniziali o finali"
+
+    # ---------------------------------------------------------
+    # 2. Lunghezza complessiva
+    # ---------------------------------------------------------
+    if len(email.encode("utf-8")) > EMAIL_MAX_LENGTH:
+        return False, "Indirizzo troppo lungo"
+
+    # ---------------------------------------------------------
+    # 3. Esattamente una @
+    # ---------------------------------------------------------
+    if email.count("@") != 1:
+        return False, "L'indirizzo deve contenere una sola @"
+
+    local, domain = email.rsplit("@", 1)
+
+    validate_local(local)
+
+    validate_domain(domain)
 
     return True, "OK"
