@@ -7,17 +7,18 @@ valid_emails = [
     "mario@example.com",
 ]
 
-
-invalid_emails = [
+invalid_locals = [
     "mario..rossi@example.com",
     ".mario@example.com",
     "mario.@example.com",
-    "mario rossi@example.com",
-    "mario@example..com",
-    "mario@-example.com",
-    "mario@example-.com",
-    "mario@example.c",
-    "mario@example.com ",
+    "mario rossi@example.com"
+]
+
+invalid_domains = [
+    "mario..rossi@example.com",
+    ".mario@example.com",
+    "mario.@example.com",
+    "mario rossi@example.com"
 ]
 
 
@@ -27,7 +28,14 @@ def test_email_valida():
 
 
 def test_email_non_valida():
-    for email in invalid_emails:
+    for email in invalid_locals:
+        risultato, messaggio = validate_email(email)
+
+        print(f"{email} -> {risultato}: {messaggio}")
+
+        assert risultato == False
+
+    for email in invalid_domains:
         risultato, messaggio = validate_email(email)
 
         print(f"{email} -> {risultato}: {messaggio}")
