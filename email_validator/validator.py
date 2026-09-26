@@ -48,6 +48,8 @@ def validate_local(local: str) -> tuple[bool, str]:
     if not allowed_local.fullmatch(local):
         return False, "La parte locale contiene caratteri non validi"
 
+    return True, "OK"
+
 def validate_domain(domain: str) -> tuple[bool, str]:
     # ---------------------------------------------------------
     # 6. Dominio
@@ -133,6 +135,8 @@ def validate_domain(domain: str) -> tuple[bool, str]:
     if not re.fullmatch(r"[A-Za-z0-9]+", tld):
         return False, "Il TLD contiene caratteri non validi"
 
+    return True, "OK"
+
 def validate_email(email: str) -> tuple[bool, str]:
     """
     Valida sintatticamente un indirizzo email.
@@ -174,8 +178,12 @@ def validate_email(email: str) -> tuple[bool, str]:
 
     local, domain = email.rsplit("@", 1)
 
-    validate_local(local)
+    check, message = validate_local(local)
+    if (check == False):
+        return check, message
 
-    validate_domain(domain)
+    check, message = validate_domain(domain)
+    if (check == False):
+        return check, message
 
     return True, "OK"
