@@ -6,6 +6,14 @@ EMAIL_MAX_LENGTH = 254
 LOCAL_PART_MAX_LENGTH = 64
 DOMAIN_MAX_LENGTH = 253
 
+def normalize_domain(domain: str) -> str:
+    domain = domain.strip().rstrip(".")
+
+    # IDN → ASCII/Punycode
+    domain = domain.encode("idna").decode("ascii")
+
+    return domain.lower()
+
 def validate_local(local: str) -> tuple[bool, str]:
     # ---------------------------------------------------------
     # 4. Local part
