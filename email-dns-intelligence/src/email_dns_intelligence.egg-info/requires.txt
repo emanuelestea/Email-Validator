@@ -1,4 +1,6 @@
+email-validator
 
 [dev]
 pytest
 ruff
+email-validator

@@ -3,6 +3,8 @@ Name: email-dns-intelligence
 Version: 0.1.0
 Summary: Email syntax and DNS intelligence tool
 Requires-Python: >=3.10
+Requires-Dist: email-validator
 Provides-Extra: dev
 Requires-Dist: pytest; extra == "dev"
 Requires-Dist: ruff; extra == "dev"
+Requires-Dist: email-validator; extra == "dev"
